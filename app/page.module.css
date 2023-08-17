@@ -227,3 +227,7 @@
     transform: rotate(0deg);
   }
 }
+
+.promptInput {
+  width: 500px;
+}
