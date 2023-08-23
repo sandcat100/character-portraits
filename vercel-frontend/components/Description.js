@@ -26,7 +26,7 @@ export default function Description(props) {
     setSdSpinner(true)
     if (promptInput) {
       const fullPrompt = `Portrait of ${promptInput}, by Greg Rutkowski, digital painting`
-      const url = 'https://sandcat100--stable-diffusion-cli-stable-diffusion-en-3ef78b-dev.modal.run'
+      const url = 'https://sandcat100--stable-diffusion-cli-stable-diffusion-entrypoint.modal.run/'
       const data = {"prompt": fullPrompt, "samples":1, "steps": 50,"batch_size":3}
       fetch(url, {
         method: 'POST',

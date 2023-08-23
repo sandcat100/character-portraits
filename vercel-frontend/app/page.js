@@ -20,7 +20,7 @@ export default function Home() {
     event.preventDefault()
     if (formData.book && formData.character) {
       setLlmSpinner(true)
-      const url = `https://sandcat100--stable-diffusion-cli-llm-entrypoint-dev.modal.run?book=${encodeURIComponent(formData.book)}&character=${encodeURIComponent(formData.character)}`
+      const url = `https://sandcat100--stable-diffusion-cli-llm-entrypoint.modal.run?book=${encodeURIComponent(formData.book)}&character=${encodeURIComponent(formData.character)}`
       fetch(url)
       .then(response => {
         if (response.ok) {
