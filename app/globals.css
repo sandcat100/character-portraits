@@ -6,8 +6,8 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 242, 180, 192;
+  --background-end-rgb: 251, 238, 191;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -106,6 +106,129 @@ a {
   }
 }
 
-.promptInput {
-  width: 500px;
+h1 {
+  font-weight: 800;
+  font-size: 50px;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+input, textarea {
+  background-color: rgba(225, 225, 225, 0.3);
+  border-radius: 5px;
+  padding: 5px;
+  border-color: transparent;
+  margin-bottom: 10px;
+  font-family: inherit;
+  width: 600px;
+  font-weight: 400;
+}
+
+textarea {
+  height: 77px;
+  font-size: 15px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-bottom: solid rgba(246, 153, 172);
+}
+
+form {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.llmPromptForm input {
+  font-size: 20px;
+}
+
+.llmPromptForm input::placeholder {
+  color: rgba(246, 153, 172);
+  opacity: 0.8;
+}
+
+/* CSS */
+.button-85 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-85:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(3px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button-85:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.spinnerImg {
+  width: 100px;
+  display: block;
+  margin: auto;
+}
+
+.sdImg {
+  display: block;
+  margin: auto;
 }

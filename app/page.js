@@ -13,11 +13,14 @@ export default function Home() {
     }
   )
 
+  const [llmSpinner, setLlmSpinner] = useState(false)
   const [llmOutput, setLlmOutput] = useState("")
 
   function handleSubmit(event) {
     event.preventDefault()
-    const url = `https://sandcat100--stable-diffusion-cli-llm-entrypoint-dev.modal.run?book=${encodeURIComponent(formData.book)}&character=${encodeURIComponent(formData.character)}`
+    if (formData.book && formData.character) {
+      setLlmSpinner(true)
+      const url = `https://sandcat100--stable-diffusion-cli-llm-entrypoint-dev.modal.run?book=${encodeURIComponent(formData.book)}&character=${encodeURIComponent(formData.character)}`
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -25,9 +28,13 @@ export default function Home() {
         }
         throw new Error("Bad response from Modal endpoint")
       })
-      .then(data => setLlmOutput(data))
+      .then(data => {
+        setLlmOutput(data)
+        setLlmSpinner(false)
+      })
       .catch(error => console.log(error))
     // setLlmOutput("slender, middle-aged man with a refined and dignified appearance, thinning silver hair, piercing blue eyes, sharp nose, elegant dress shirt, tailored suit, polished shoes")
+    }
   }
 
   function handleFormChange(event) {
@@ -40,31 +47,29 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <h1>hi babbit!!!!</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Book:
-          <input 
-            type="text"
-            name="book"
-            onChange={handleFormChange}
-            value={formData.book}
-          />
-        </label>        
-        <label>
-          Character:
-          <input
-            type="text"
-            name="character"
-            onChange={handleFormChange}
-            value={formData.character}
-          />
-        </label>
-        <button>Generate</button>
+      <h1>🍒 AI-generated Character Portraits 🎰</h1>
+      <h2><i>~dusting off my CS degree for a hot sec~</i></h2>
+      <form className="llmPromptForm" onSubmit={handleSubmit}>
+        <input 
+          type="text"
+          name="book"
+          onChange={handleFormChange}
+          value={formData.book}
+          placeholder="book title"
+        />
+        <br/>        
+        <input
+          type="text"
+          name="character"
+          onChange={handleFormChange}
+          value={formData.character}
+          placeholder="character name"
+        />
+        <br/>
+        <button className="button-85">Generate prompt</button>
       </form>
-      <Description
-        llmOutput={llmOutput}
-      />
+      {llmSpinner && <img className="spinnerImg" src="spinner4.gif" />}
+      {!llmSpinner && llmOutput && <Description llmOutput={llmOutput} />}
     </main>
   )
 }

@@ -3,8 +3,9 @@ import {useState, useEffect} from 'react'
 export default function Description(props) {
   const [promptInput, setPromptInput] = useState(props.llmOutput)
   const [imgSrc, setImgSrc] = useState("")
+  const [sdSpinner, setSdSpinner] = useState(false)
 
-  // Set the prompt input box equal to the LLM output when the LLM spits out smth
+  // Set the prompt input box equal to the LLM output when the LLM returns the response
   useEffect(function() {
     setPromptInput(props.llmOutput)
   }, [props.llmOutput])
@@ -16,6 +17,7 @@ export default function Description(props) {
 
   function handleSDSubmit(event) {
     event.preventDefault()
+    setSdSpinner(true)
     if (promptInput) {
       const fullPrompt = `Portrait of ${promptInput}, by Greg Rutkowski, digital painting`
       const url = 'https://sandcat100--stable-diffusion-cli-stable-diffusion-en-3ef78b-dev.modal.run'
@@ -36,6 +38,7 @@ export default function Description(props) {
       })
       .then(data => {
         setImgSrc(data)
+        setSdSpinner(false)
       })
       .catch(error => console.log(error))    
     }
@@ -43,17 +46,17 @@ export default function Description(props) {
 
   return (
     <div>
-      <h2>Character description prompt for stable diffusion</h2>
       <form className="promptInput" onSubmit={handleSDSubmit}>
-        <input
-          type="text"
+        <textarea
           name="promptInput"
           onChange={handlePromptInputChange}
           value={promptInput}
         />
-        <button>Generate image</button>
+        <br/>
+        <button className="button-85">Generate portrait</button>
       </form>
-      <img src={`data:image/png;base64,${imgSrc}`}/>
+      {sdSpinner && <img className="spinnerImg" src="spinner3.gif" />}
+      {!sdSpinner && imgSrc && <img className="sdImg" src={`data:image/png;base64,${imgSrc}`}/>}
     </div>
   )
 }
