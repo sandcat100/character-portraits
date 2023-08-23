@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 
 export default function Description(props) {
   const [promptInput, setPromptInput] = useState(props.llmOutput)
-  const [imgSrc, setImgSrc] = useState("")
+  const [imgSrcs, setImgSrcs] = useState([])
   const [sdSpinner, setSdSpinner] = useState(false)
 
   // Set the prompt input box equal to the LLM output when the LLM returns the response
@@ -15,13 +15,19 @@ export default function Description(props) {
     setPromptInput(value)
   }
 
+  function generatedImgJSX() {
+    return imgSrcs.map(imgSrc => 
+      <div className="sdImg"><img className="sdImg" src={`data:image/png;base64,${imgSrc}`}/></div>
+    )
+  }
+
   function handleSDSubmit(event) {
     event.preventDefault()
     setSdSpinner(true)
     if (promptInput) {
       const fullPrompt = `Portrait of ${promptInput}, by Greg Rutkowski, digital painting`
       const url = 'https://sandcat100--stable-diffusion-cli-stable-diffusion-en-3ef78b-dev.modal.run'
-      const data = {"prompt": fullPrompt, "samples":1, "steps": 50,"batch_size":1}
+      const data = {"prompt": fullPrompt, "samples":1, "steps": 50,"batch_size":3}
       fetch(url, {
         method: 'POST',
         headers: {
@@ -32,12 +38,12 @@ export default function Description(props) {
       })
       .then(response => {
         if (response.ok) {
-          return response.text()
+          return response.json()
         }
         throw new Error("Bad response from Modal endpoint")
       })
       .then(data => {
-        setImgSrc(data)
+        setImgSrcs(data)
         setSdSpinner(false)
       })
       .catch(error => console.log(error))    
@@ -53,10 +59,12 @@ export default function Description(props) {
           value={promptInput}
         />
         <br/>
-        <button className="button-85">Generate portrait</button>
+        <button className="button-85">Generate portraits</button>
       </form>
       {sdSpinner && <img className="spinnerImg" src="spinner3.gif" />}
-      {!sdSpinner && imgSrc && <img className="sdImg" src={`data:image/png;base64,${imgSrc}`}/>}
+      <div className="imgsDiv">
+        {generatedImgJSX()}
+      </div>
     </div>
   )
 }

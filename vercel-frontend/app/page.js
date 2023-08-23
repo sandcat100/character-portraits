@@ -29,11 +29,10 @@ export default function Home() {
         throw new Error("Bad response from Modal endpoint")
       })
       .then(data => {
-        setLlmOutput(data)
+        setLlmOutput(`${formData.character} from ${formData.book}, ${data}`)
         setLlmSpinner(false)
       })
       .catch(error => console.log(error))
-    // setLlmOutput("slender, middle-aged man with a refined and dignified appearance, thinning silver hair, piercing blue eyes, sharp nose, elegant dress shirt, tailored suit, polished shoes")
     }
   }
 
@@ -66,7 +65,7 @@ export default function Home() {
           placeholder="character name"
         />
         <br/>
-        <button className="button-85">Generate prompt</button>
+        <button className="button-85">Generate description</button>
       </form>
       {llmSpinner && <img className="spinnerImg" src="spinner4.gif" />}
       {!llmSpinner && llmOutput && <Description llmOutput={llmOutput} />}
