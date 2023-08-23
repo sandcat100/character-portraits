@@ -16,8 +16,8 @@ export default function Description(props) {
   }
 
   function generatedImgJSX() {
-    return imgSrcs.map(imgSrc => 
-      <div className="sdImg"><img className="sdImg" src={`data:image/png;base64,${imgSrc}`}/></div>
+    return imgSrcs.map((imgSrc, index) => 
+      <div className="sdImg" key={index}><img className="sdImg" src={`data:image/png;base64,${imgSrc}`}/></div>
     )
   }
 
